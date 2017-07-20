@@ -1,7 +1,5 @@
 # How To Customize Your Keyboard's Behavior
 
-<!-- toc -->
-
 For a lot of people a custom keyboard is about more than sending button presses to your computer. You want to be able to do things that are more complex than simple button presses and macros. QMK has hooks that allow you to inject code, override functionality, and otherwise customize how your keyboard behaves in different situations. 
 
 This page does not assume any special knowledge about QMK, but reading [Understanding QMK](understanding_qmk.html) will help you understand what is going on at a more fundamental level.
@@ -36,9 +34,9 @@ enum my_keycodes {
 };
 ```
 
-## Programming The Behavior Of A Keycode
+## Programming The Behavior Of Any Keycode
 
-When you want to override the behavior of an existing key, or define the behavior for a new key, you should use the `process_record_{kb,user}()` functions. These are called by QMK during key processing before the actual key event is handled. If these functions return `true` QMK will process the keycodes as usual. That can be handy for extending the functionality of a key rather than replacing it. If these functions return `false` QMK will skip the normal key handling, and it will be up you to send and key up or down events that are required.
+When you want to override the behavior of an existing key, or define the behavior for a new key, you should use the `process_record_kb()' and `process_record_user()` functions. These are called by QMK during key processing before the actual key event is handled. If these functions return `true` QMK will process the keycodes as usual. That can be handy for extending the functionality of a key rather than replacing it. If these functions return `false` QMK will skip the normal key handling, and it will be up you to send any key up or down events that are required.
 
 These function are called every time a key is pressed or released.
 
@@ -59,7 +57,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_ENTER:
       // Play a tone when enter is pressed
       if (record->event.pressed) {
-        PLAY_NOTE_ARRAY(tone_enter);
+        PLAY_NOTE_ARRAY(tone_qwerty);
       }
       return true; // Let QMK send the enter press/release events
   }
@@ -88,7 +86,7 @@ keyrecord_t record {
 }
 ```
 
-## LED Control
+# LED Control
 
 This allows you to control the 5 LED's defined as part of the USB Keyboard spec. It will be called when the state of one of those 5 LEDs changes.
 
@@ -135,7 +133,7 @@ void led_set_kb(uint8_t usb_led) {
 * Keyboard/Revision: `void led_set_kb(uint8_t usb_led)` 
 * Keymap: `void led_set_user(uint8_t usb_led)`
 
-## Matrix Initialization Code
+# Matrix Initialization Code
 
 Before a keyboard can be used the hardware must be initialized. QMK handles initialization of the keyboard matrix itself, but if you have other hardware like LED's or i&#xb2;c controllers you will need to set up that hardware before it can be used.
 
@@ -160,7 +158,7 @@ void matrix_init_kb(void) {
 * Keyboard/Revision: `void matrix_init_kb(void)` 
 * Keymap: `void matrix_init_user(void)`
 
-## Matrix Scanning Code
+# Matrix Scanning Code
 
 Whenever possible you should customize your keyboard by using `process_record_*()` and hooking into events that way, to ensure that your code does not have a negative performance impact on your keyboard. However, in rare cases it is necessary to hook into the matrix scanning. Be extremely careful with the performance of code in these functions, as it will be called at least 10 times per second.
 
@@ -176,5 +174,3 @@ This example has been deliberately omitted. You should understand enough about Q
 This function gets called at every matrix scan, which is basically as often as the MCU can handle. Be careful what you put here, as it will get run a lot.
 
 You should use this function if you need custom matrix scanning code. It can also be used for custom status output (such as LED's or a display) or other functionality that you want to trigger regularly even when the user isn't typing.
-
-
