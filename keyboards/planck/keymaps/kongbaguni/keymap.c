@@ -122,9 +122,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = {
   {KC_TILD,       KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR,  KC_LPRN,  KC_RPRN,  KC_PIPE},
-  {_______,        _______, _______, _______, _______, _______, _______, _______, KC_UNDS,  KC_EQL,   KC_LCBR,  KC_RCBR},
-  {_______,        _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______},
-  {_______,        _______, _______, _______, _______, KC_BSPC, KC_BSPC, _______, KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END}
+  {_______,       _______, _______, _______, _______, _______, _______, _______, KC_UNDS,  KC_EQL,   KC_LCBR,  KC_RCBR},
+  {_______,       _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2,  KC_BTN3,  KC_BTN4,  KC_BTN5},
+  {_______,       _______, _______, _______, _______, KC_BSPC, KC_BSPC, _______, KC_MS_L,  KC_MS_D,  KC_MS_U,  KC_MS_R},
+  // KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END}
 },
 
 /* Adjust (Lower + Raise)
@@ -141,14 +142,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = {
-  // {KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12},
-  // {_______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET},
   // {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  _______, _______},
   // {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {KC_PWR,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  RESET},
   {XXXXXXX, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  XXXXXXX},
-  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
-  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, KC_BRIU, KC_BRID, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R},
 }
 
 
