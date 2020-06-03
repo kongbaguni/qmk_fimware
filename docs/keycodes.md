@@ -369,7 +369,7 @@ See also: [Mouse Keys](feature_mouse_keys.md)
 |`KC_MS_ACCEL0`  |`KC_ACL0`|Set mouse acceleration to 0|
 |`KC_MS_ACCEL1`  |`KC_ACL1`|Set mouse acceleration to 1|
 |`KC_MS_ACCEL2`  |`KC_ACL2`|Set mouse acceleration to 2|
-
+	
 ## Modifiers :id=modifiers
 
 See also: [Modifier Keys](feature_advanced_keycodes.md#modifier-keys)
