@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   \  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |BLTOGG|BLDEC |BL_INC|      |      |      |      |      |   -  |   +  |   [  |   ]  |
+ * |RGBTOG|RGBMOD|RGBRMD|      |      |      |      |      |   -  |   +  |   [  |   ]  |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |  Next| Vol- | Vol+ | Play |      | mute |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_RAISE] = LAYOUT_planck_grid(
   ALL_T(KC_GRV), KC_1,    KC_2,    KC_3,     KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSLS,
-  BL_TOGG,       BL_DEC,  BL_INC,  _______,  _______, _______, _______, _______, KC_MINS, KC_PPLS, KC_LBRC, KC_RBRC,
+  RGB_TOG,       RGB_MOD, RGB_RMOD, _______,  _______, _______, _______, _______, KC_MINS, KC_PPLS, KC_LBRC, KC_RBRC,
   KC_MNXT,       KC_VOLD, KC_VOLU, KC_MPLY,  KC_MUTE, _______, _______, _______, _______, _______, _______, _______,
   _______,       _______, _______, _______,  KC_ENT,  KC_ENT,  _______, _______, _______, _______, _______, _______
 ),
@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
-  RESET,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DYN_REC_START1,  DYN_REC_START2,  XXXXXXX,             XXXXXXX,           XXXXXXX,              XXXXXXX,  XXXXXXX,
+  KC_PWR,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DYN_REC_START1,  DYN_REC_START2,  XXXXXXX,             XXXXXXX,           XXXXXXX,              XXXXXXX,  RESET,
   KC_CAPS,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DYN_MACRO_PLAY1, DYN_MACRO_PLAY2, KC_AUDIO_MUTE,       KC_AUDIO_VOL_UP,   KC_MEDIA_PLAY_PAUSE,  XXXXXXX,  XXXXXXX,
   TG(_MAC), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DYN_REC_STOP,    DYN_REC_STOP,    KC_MEDIA_PREV_TRACK, KC_AUDIO_VOL_DOWN, KC_MEDIA_NEXT_TRACK,  XXXXXXX,  XXXXXXX,
   XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
