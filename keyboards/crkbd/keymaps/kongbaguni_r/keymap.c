@@ -59,15 +59,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LOWER] = LAYOUT( \
-      _______,KC_RPRN,KC_LPRN,KC_ASTR,KC_AMPR,KC_CIRC,          KC_PERC,KC_DLR,KC_HASH,KC_AT,KC_EXLM,KC_ESC,\
+      _______,KC_RPRN,KC_LPRN,KC_ASTR,KC_AMPR,KC_CIRC,          KC_PERC,KC_DLR,KC_HASH,KC_AT,KC_EXLM,KC_TILD,\
       KC_GRV,KC_PIPE,KC_RCBR,KC_LCBR,KC_EQL,KC_MINS,            KC_F5,KC_F4,KC_F3,KC_F2,KC_F1,KC_LCTL,\
       KC_TILD,KC_BSLS,KC_RBRC,KC_LBRC,KC_PLUS,KC_UNDS,          KC_F10,KC_F9,KC_F8,KC_F7,KC_F6,_______,\
-                              _______,   _______, KC_DEL,    KC_DEL, LOWER, _______ \
+                              _______,   _______, KC_DEL,    KC_ESC, LOWER, _______ \
     ),
 
   [_RAISE] = LAYOUT( \
 
- _______,KC_0,KC_9,KC_8,KC_7,KC_6,               KC_5,KC_4,KC_3,KC_2,KC_1,_______,\
+ _______,KC_0,KC_9,KC_8,KC_7,KC_6,               KC_5,KC_4,KC_3,KC_2,KC_1,KC_GRV,\
  XXXXXXX,KC_RIGHT,KC_UP,KC_DOWN, KC_LEFT,XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,KC_LCTL,\
  _______, RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,\
                                           _______, RAISE, KC_ENT,    KC_ENT,   _______, _______ \
