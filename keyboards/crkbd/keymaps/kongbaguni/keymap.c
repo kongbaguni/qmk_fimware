@@ -74,21 +74,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_TILD,  KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
+      KC_CAPS,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_MINS,  KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE,  KC_GRV,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,   LOWER, KC_DEL,    KC_DEL  , _______, _______ \
                                       //`--------------------------'  `--------------------------'
     ),
+  
 
   [_RAISE] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSLS,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,  KC_F11,  KC_F12, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_LEFT,   KC_UP,KC_RIGHT, XXXXXXX,\
+      KC_CAPS,  KC_F11,  KC_F12, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT,   KC_UP,KC_RIGHT ,XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, _______,\
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX, _______,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, KC_ENT,    KC_ENT,   RAISE, _______ \
                                       //`--------------------------'  `--------------------------'
@@ -96,11 +97,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        RESET,  RGBRST, XXXXXXX, XXXXXXX, XXXXXXX, M1START,                      M2START, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR ,\
+        RESET,  RGBRST, XXXXXXX, XXXXXXX, XXXXXXX, M1START,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR ,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, MACSTOP,                      MACSTOP, MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4,\
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, MACSTOP,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, M1_PLAY,                      M2_PLAY, XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX,\
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, M1_PLAY,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,   LOWER, _______,    _______,   RAISE, _______ \
                                       //`--------------------------'  `--------------------------'
@@ -143,7 +144,7 @@ void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
 
-// const char *read_mode_icon(bool swap);
+//const char *read_mode_icon(bool swap);
 // const char *read_host_led_state(void);
 // void set_timelog(void);
 // const char *read_timelog(void);
