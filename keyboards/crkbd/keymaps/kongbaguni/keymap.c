@@ -136,13 +136,14 @@ void matrix_init_user(void) {
 
 //SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
 #ifdef SSD1306OLED
-
+#include "animelogo.c"
 // When add source files to SRC in rules.mk, you can use functions.
 const char *read_layer_state(void);
 const char *read_logo(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
+const char *read_logo_anime(void);
 
 //const char *read_mode_icon(bool swap);
 // const char *read_host_led_state(void);
@@ -163,7 +164,8 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
     //matrix_write_ln(matrix, read_host_led_state());
     //matrix_write_ln(matrix, read_timelog());
   } else {
-    matrix_write(matrix, read_logo());
+   matrix_write(matrix, read_logo());
+   //matrix_write(matrix, read_logo_anime());
   }
 }
 
