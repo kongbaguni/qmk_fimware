@@ -46,6 +46,7 @@ extern uint8_t is_master;
 #define M_ESC MT(MOD_LCTL,KC_ESC)
 #define M_SHIFT MT(MOD_RSFT, KC_ENT) 
 #define M_RALT MT(MOD_RALT, KC_CAPS)
+#define M_GUI MT(MOD_LGUI, KC_BSPC)
 
 #define L_RAISE LT(_RAISE, KC_ENT)
 #define L_LOWER LT(_LOWER, KC_ENT)
@@ -74,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, M_SHIFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, L_LOWER, L_FUNC1,    L_FUNC2, L_RAISE,  M_RALT \
+                                          M_GUI, L_LOWER, L_FUNC1,    L_FUNC2, L_RAISE,  M_RALT \
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -124,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, XXXXXXX,    KC_ENT, XXXXXXX, XXXXXXX \
+                                          XXXXXXX, XXXXXXX, XXXXXXX,    KC_SPC, XXXXXXX, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
   ),
   [_FUNC2] = LAYOUT( \
@@ -135,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN, MS_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, KC_ENT,    XXXXXXX, XXXXXXX, XXXXXXX \
+                                          XXXXXXX, XXXXXXX, KC_SPC,    XXXXXXX, XXXXXXX, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
   ), 
 
