@@ -287,7 +287,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // when keycode QMKBEST is pressed
             SEND_STRING("kongbaguni@gmail.com");
         } else {
-            SEND_STRING("\n");
+            SEND_STRING("\t");
             // when keycode QMKBEST is released
         }
     break;
@@ -297,6 +297,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             // when keycode QMKBEST is pressed
           SEND_STRING("#");
+
           int a = 6;
           for (int i = 0; i < a; i++) {
             int r = rand() % 16;  
