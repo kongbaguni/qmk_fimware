@@ -64,7 +64,8 @@ enum custom_keycodes {
   ADJUST,
   BACKLIT,
   RGBRST,
-  EMAIL,
+  EMAIL, // 이메일 입력하는 메크로
+  RGBHEX, // RGB 컬러 HEX값 랜덤 생성하는 매크로
 };
 
 enum macro_keycodes {
@@ -135,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_FUNC2] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, XXXXXXX, XXXXXXX, EMAIL, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+      XXXXXXX, XXXXXXX, XXXXXXX,   EMAIL,  RGBHEX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRMU, KC_VOLU,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -287,6 +288,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("kongbaguni@gmail.com");
         } else {
             SEND_STRING("\n");
+            // when keycode QMKBEST is released
+        }
+    break;
+    return false;
+
+    case RGBHEX:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+          SEND_STRING("#");
+          int a = 6;
+          for (int i = 0; i < a; i++) {
+            int r = rand() % 16;  
+            switch(r) {
+              case 0: SEND_STRING("0"); break;
+              case 1: SEND_STRING("1"); break;
+              case 2: SEND_STRING("2"); break; 
+              case 3: SEND_STRING("3"); break;
+              case 4: SEND_STRING("4"); break;
+              case 5: SEND_STRING("5"); break;
+              case 6: SEND_STRING("6"); break;
+              case 7: SEND_STRING("7"); break;
+              case 8: SEND_STRING("8"); break;
+              case 9: SEND_STRING("9"); break;
+              case 10: SEND_STRING("A"); break;
+              case 11: SEND_STRING("B"); break;
+              case 12: SEND_STRING("C"); break;
+              case 13: SEND_STRING("D"); break;
+              case 14: SEND_STRING("E"); break;
+              case 15: SEND_STRING("F"); break;
+            }            
+          }
+            
+        } else {
+          SEND_STRING("\n");
             // when keycode QMKBEST is released
         }
     break;
