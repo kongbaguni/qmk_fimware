@@ -63,13 +63,13 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   BACKLIT,
-  RGBRST,
-  EMAIL, // 이메일 입력하는 메크로
-  RGBHEX, // RGB 컬러 HEX값 랜덤 생성하는 매크로
+  RGBRST
 };
 
 enum macro_keycodes {
   KC_SAMPLEMACRO,
+  EMAIL, // 이메일 입력하는 메크로
+  RGBHEX // RGB 컬러 HEX값 랜덤 생성하는 매크로
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -81,10 +81,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, M_SHIFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          M_GUI, L_LOWER, L_FUNC1,    L_FUNC2, L_RAISE,  M_RALT \
+                                          M_GUI, L_LOWER, L_FUNC1,     L_FUNC2,  L_RAISE,  M_RALT \
                                       //`--------------------------'  `--------------------------'
-
+                                          
   ),
+
 
   [_LOWER] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -105,13 +106,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX, _______,\
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_B,    KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX, _______,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, LOWER,  KC_ENT,      KC_ENT,   RAISE, _______ \
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [_ADJUST] = LAYOUT( \
+  [_ADJUST] = LAYOUT(
+   \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         RESET,  RGBRST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_PWR,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -237,6 +239,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
+    
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
@@ -246,6 +249,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
       }
       return false;
+    
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
@@ -255,6 +259,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
       }
       return false;
+    
     case ADJUST:
         if (record->event.pressed) {
           layer_on(_ADJUST);
@@ -262,6 +267,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_off(_ADJUST);
         }
         return false;
+    
     case RGB_MOD:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
@@ -271,6 +277,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       #endif
       return false;
+    
     case RGBRST:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
@@ -279,22 +286,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           RGB_current_mode = rgblight_config.mode;
         }
       #endif
-      break;
-    return false;
+      return false;
 
-  case EMAIL:
-     if (record->event.pressed) {
+    case EMAIL:
+    if (record->event.pressed) {
             SEND_STRING("kongbaguni@gmail.com");
         } else {
             SEND_STRING("\t");
         }
-    break;
     return false;
 
     case RGBHEX:
         if (record->event.pressed) {
           SEND_STRING("#");
-
           int a = 6;
           for (int i = 0; i < a; i++) {
             int r = rand() % 16;  
@@ -316,13 +320,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               case 14: SEND_STRING("E"); break;
               case 15: SEND_STRING("F"); break;
             }            
-          }
-            
+          }    
         } else {
           SEND_STRING("\n");
         }
-    break;
-    return false;
+        return false;
   }
   return true;
 }
