@@ -284,18 +284,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   case EMAIL:
      if (record->event.pressed) {
-            // when keycode QMKBEST is pressed
             SEND_STRING("kongbaguni@gmail.com");
         } else {
             SEND_STRING("\t");
-            // when keycode QMKBEST is released
         }
     break;
     return false;
 
     case RGBHEX:
         if (record->event.pressed) {
-            // when keycode QMKBEST is pressed
           SEND_STRING("#");
 
           int a = 6;
@@ -323,7 +320,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             
         } else {
           SEND_STRING("\n");
-            // when keycode QMKBEST is released
         }
     break;
     return false;
