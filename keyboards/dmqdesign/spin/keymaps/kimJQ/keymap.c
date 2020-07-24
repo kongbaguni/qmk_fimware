@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_FL] = LAYOUT(/* Base */
                 K_COPY,   KC_F2,    KC_F3,    ________,
-                KC_F4, xxxxxxxx, xxxxxxxx, ________,
+                KC_F4,    xxxxxxxx, xxxxxxxx, ________,
                 xxxxxxxx, KC_UP,    xxxxxxxx, ________,
                 KC_LEFT,  KC_DOWN,  KC_RIGHT
                 ),
@@ -176,27 +176,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // 붙여넣기 직후 백스페이스 두번 직후 F2
     case MECRO_01:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("v") "\b\b");  
-      } else {
+        SEND_STRING(SS_LCTL("v") "\b\b" SS_DELAY(100));  
         register_code(KC_F2);
+      } else {
       }
       return false;
     //0 입력 직후 엔터
      case MECRO_02:
       if (record->event.pressed) {
-        SEND_STRING("0");
-      
+        SEND_STRING("0\n");
       } else {
-        SEND_STRING("\n");  
       }
       return false;
       // 붙여넣기 후 백스페이스 한번 뒤 엔터
      case MECRO_03:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("v") "\b");  
-      
+        SEND_STRING(SS_LCTL("v") "\b\n");  
       } else {
-        SEND_STRING("\n");          
       }
       return false;
 
