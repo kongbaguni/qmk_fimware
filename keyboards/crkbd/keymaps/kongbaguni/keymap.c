@@ -16,8 +16,7 @@ extern uint8_t is_master;
 #define _LOWER 1
 #define _RAISE 2
 #define _ADJUST 3
-#define _FUNC1 4
-#define _FUNC2 5
+#define _FUNC 4
 
 
 #define M1START DYN_REC_START1
@@ -44,14 +43,13 @@ extern uint8_t is_master;
 
 #define M_TAB MT(MOD_LCTL,KC_TAB)
 #define M_ESC MT(MOD_LCTL,KC_ESC)
-#define M_SHIFT MT(MOD_RSFT, KC_ENT) 
+#define M_SHIFT MT(MOD_RSFT, KC_ENT)  
 #define M_RALT MT(MOD_RALT, KC_CAPS)
 #define M_GUI MT(MOD_LGUI, KC_BSPC)
 
 #define L_RAISE LT(_RAISE, KC_ENT)
 #define L_LOWER LT(_LOWER, KC_ENT)
-#define L_FUNC1 LT(_FUNC1, KC_SPC)
-#define L_FUNC2 LT(_FUNC2, KC_SPC)
+#define L_FUNC  LT(_FUNC, KC_SPC)
 // 강제종료
 #define FORCE LGUI(LALT(KC_ESC))
 // 화면 즉시 잠금
@@ -63,13 +61,13 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   BACKLIT,
-  RGBRST
+  RGBRST,
+  EMAIL, // 이메일 입력하는 메크로
+  RGBHEX // RGB 컬러 HEX값 랜덤 생성하는 매크로
 };
 
 enum macro_keycodes {
   KC_SAMPLEMACRO,
-  EMAIL, // 이메일 입력하는 메크로
-  RGBHEX // RGB 컬러 HEX값 랜덤 생성하는 매크로
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -81,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, M_SHIFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, L_LOWER, L_FUNC1,     L_FUNC2,  L_RAISE,  M_RALT \
+                                          KC_LGUI, L_LOWER, KC_SPC,     L_FUNC,  L_RAISE,  M_RALT \
                                       //`--------------------------'  `--------------------------'
                                           
   ),
@@ -97,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // |--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,   LOWER, KC_DEL,    KC_DEL  , RAISE, _______ \
                                       //`--------------------------'  `--------------------------'
-    ),
+  ),
   
 
   [_RAISE] = LAYOUT( \
@@ -125,34 +123,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [_FUNC1] = LAYOUT( \
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      FORCE,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX ,\
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      SCRLOCK,  KC_F11,  KC_F12, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, XXXXXXX,    KC_SPC, XXXXXXX, XXXXXXX \
-                                      //`--------------------------'  `--------------------------'
-  ),
-  [_FUNC2] = LAYOUT( \
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, XXXXXXX, XXXXXXX,   EMAIL,  RGBHEX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRMU, KC_VOLU,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, XXXXXXX, KC_SPC,    XXXXXXX, XXXXXXX, _______ \
-                                      //`--------------------------'  `--------------------------'
-  ), 
 
+  [_FUNC] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      FORCE,     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      SCRLOCK, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRMU, KC_VOLU,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX,   EMAIL, XXXXXXX,  RGBHEX, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, XXXXXXX, KC_ENT,    XXXXXXX, XXXXXXX, _______ \
+                                      //`--------------------------'  `--------------------------'
+  ),  
 };
 
 
 
 int RGB_current_mode;
+
+
+unsigned char randomSeed = 0;
+
+char * RGB_HEX = "#000000";
+
+void randomRGBhex(void) {
+  srand(randomSeed);
+  int a = rand() % 0xfff;
+  int b = rand() % 0xfff;
+  sprintf(RGB_HEX,"#%03x%03x",a,b);
+}
 
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
@@ -197,10 +196,12 @@ void matrix_scan_user(void) {
 }
 
 void matrix_render_user(struct CharacterMatrix *matrix) {
+  randomSeed += 1;
   if (is_master) {
     // If you want to change the display of OLED, you need to change here
-    matrix_write_ln(matrix, read_layer_state());
-    matrix_write_ln(matrix, read_keylog());
+   matrix_write_ln(matrix, read_layer_state());
+   matrix_write_ln(matrix, read_keylog());
+   matrix_write(matrix, RGB_HEX);
     //matrix_write_ln(matrix, read_keylogs());
     //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
     //matrix_write_ln(matrix, read_host_led_state());
@@ -224,6 +225,7 @@ void iota_gfx_task_user(void) {
   matrix_update(&display, &matrix);
 }
 #endif//SSD1306OLED
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
@@ -298,29 +300,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case RGBHEX:
         if (record->event.pressed) {
-          SEND_STRING("#");
-          int a = 6;
-          for (int i = 0; i < a; i++) {
-            int r = rand() % 16;  
-            switch(r) {
-              case 0: SEND_STRING("0"); break;
-              case 1: SEND_STRING("1"); break;
-              case 2: SEND_STRING("2"); break; 
-              case 3: SEND_STRING("3"); break;
-              case 4: SEND_STRING("4"); break;
-              case 5: SEND_STRING("5"); break;
-              case 6: SEND_STRING("6"); break;
-              case 7: SEND_STRING("7"); break;
-              case 8: SEND_STRING("8"); break;
-              case 9: SEND_STRING("9"); break;
-              case 10: SEND_STRING("A"); break;
-              case 11: SEND_STRING("B"); break;
-              case 12: SEND_STRING("C"); break;
-              case 13: SEND_STRING("D"); break;
-              case 14: SEND_STRING("E"); break;
-              case 15: SEND_STRING("F"); break;
-            }            
-          }    
+          randomRGBhex();
+          send_string(RGB_HEX);
         } else {
           SEND_STRING("\n");
         }
