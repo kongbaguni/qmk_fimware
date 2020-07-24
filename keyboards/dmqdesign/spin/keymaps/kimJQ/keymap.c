@@ -20,6 +20,7 @@
 #define xxxxxxxx KC_NO
 
 #define K_COPY LCTL(KC_C)
+
 enum layers
 {
   _BL,
@@ -29,7 +30,7 @@ enum layers
 
 enum custom_keycodes {
   // xxxxxxxx,
-  MECRO_01,
+  MECRO_01 = 3,
   MECRO_02,
   MECRO_03,
   MECRO_04,
@@ -178,6 +179,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         SEND_STRING(SS_LCTL("v") "\b\b" SS_DELAY(100));  
         register_code(KC_F2);
+        unregister_code(KC_F2);
       } else {
       }
       return false;
