@@ -33,15 +33,7 @@ enum custom_keycodes {
   MECRO_01 = 3,
   MECRO_02,
   MECRO_03,
-  MECRO_04,
-  MECRO_05,
-  MECRO_06,
-  MECRO_07,
-  MECRO_08,
-  MECRO_09,
-  MECRO_10,
-  MECRO_11,
-  MECRO_12
+  MECRO_04
 };
 
 uint8_t currentLayer;
@@ -52,98 +44,53 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_KP_7, KC_KP_8, KC_KP_9, TO(_BL),
                 KC_KP_4, KC_KP_5, KC_KP_6, TO(_FL),
                 KC_KP_1, KC_KP_2, KC_KP_3, TO(_TL),
-                KC_KP_0, RGB_TOG, RGB_MOD
+                KC_KP_0, KC_DOT,  KC_COMM
                 ),
 
     [_FL] = LAYOUT(/* Base */
-                K_COPY,   KC_F2,    KC_F3,    ________,
-                KC_F4,    xxxxxxxx, xxxxxxxx, ________,
-                xxxxxxxx, KC_UP,    xxxxxxxx, ________,
-                KC_LEFT,  KC_DOWN,  KC_RIGHT
+                K_COPY,   KC_LPRN,   KC_RPRN,    ________,
+                KC_MINS,  KC_SLSH,   KC_DOT,    ________,
+                xxxxxxxx, KC_UP,     xxxxxxxx,  ________,
+                KC_LEFT,  KC_DOWN,   KC_RIGHT
                 ),
 
     [_TL] = LAYOUT(/* Base */
-                MECRO_01, MECRO_02, MECRO_03, ________,
-                MECRO_04, MECRO_05, MECRO_06, ________,
-                MECRO_07, MECRO_08, MECRO_09, ________,
-                MECRO_10, MECRO_11, MECRO_12
+                K_COPY,   MECRO_01, MECRO_02, ________,
+                MECRO_03, KC_F2,    KC_F3,     ________,
+                KC_F4,    KC_UP,    MECRO_04,   ________,
+                KC_LEFT,  KC_DOWN,  KC_RIGHT
                 )
 };
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) { /* First encoder */
-        switch (currentLayer) {     //break each encoder update into a switch statement for the current layer
-            case _BL:
-                if (clockwise) {
-                    rgblight_increase_hue();
-                } else {
-                    rgblight_decrease_hue();
-                }
-                break;
-            case _FL:
-                if (clockwise) {
-                    midi_send_cc(&midi_device, 0, 0x14, 1);
-                } else {
-                    midi_send_cc(&midi_device, 0, 0x15, 1);
-                }
-                break;
-            case _TL:
-                if (clockwise) {
-                    midi_send_cc(&midi_device, 0, 0x1A, 1);
-                } else {
-                    midi_send_cc(&midi_device, 0, 0x1B, 1);
-                }
-                break;
+   switch (index) {
+       case 0:
+       if (clockwise) {
+         rgblight_increase();
+       } else {
+         rgblight_toggle();
+       }
+       break ;
+
+       case 1:
+       if (clockwise) {
+         tap_code(KC_VOLU);
+       } else {
+         tap_code(KC_VOLD);
         }
-    } else if (index == 1) { /* Second encoder */
-        switch (currentLayer) {
-            case _BL:
-                if (clockwise) {
-                    tap_code(KC_VOLU);
-                } else {
-                    tap_code(KC_VOLD);
-                }
-                break;
-            case _FL:
-                if (clockwise) {
-                    midi_send_cc(&midi_device, 0, 0x16, 1);
-                } else {
-                    midi_send_cc(&midi_device, 0, 0x17, 1);
-                }
-                break;
-            case _TL:
-                if (clockwise) {
-                    midi_send_cc(&midi_device, 0, 0x1C, 1);
-                } else {
-                    midi_send_cc(&midi_device, 0, 0x1D, 1);
-                }
-                break;
-        }
-    } else if (index == 2) { /* Third encoder */
-        switch (currentLayer) {
-            case _BL:
-                if (clockwise) {
-                    rgblight_increase_val();
-                } else {
-                    rgblight_decrease_val();
-                }
-                break;
-            case _FL:
-                if (clockwise) {
-                    midi_send_cc(&midi_device, 0, 0x18, 1);
-                } else {
-                    midi_send_cc(&midi_device, 0, 0x19, 1);
-                }
-                break;
-            case _TL:
-                if (clockwise) {
-                    midi_send_cc(&midi_device, 0, 0x1E, 1);
-                } else {
-                    midi_send_cc(&midi_device, 0, 0x1F, 1);
-                }
-                break;
-        }
-    }
+       break ;
+
+       case 2:
+       if (clockwise) {
+          register_code(KC_LCTL);
+          tap_code(KC_F12);
+          unregister_code(KC_LCTL);
+       } else {
+          tap_code(KC_F12);
+       }
+       break ;
+   }
+   
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) { //This will run every time the layer is updated
@@ -198,79 +145,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
 
-
      case MECRO_04:
       if (record->event.pressed) {
-      
+        SEND_STRING("=");
+        register_code(KC_UP);
+        unregister_code(KC_UP);
+        SEND_STRING("+");
+        register_code(KC_LEFT);
+        unregister_code(KC_LEFT);
+        register_code(KC_LEFT);
+        unregister_code(KC_LEFT);
+        SEND_STRING("-");
+        register_code(KC_LEFT);
+        unregister_code(KC_LEFT);        
       } else {
         
       }
       return false;
 
-     case MECRO_05:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-
-     case MECRO_06:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-
-     case MECRO_07:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-
-     case MECRO_08:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-
-     case MECRO_09:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-
-     case MECRO_10:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-
-     case MECRO_11:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-
-     case MECRO_12:
-      if (record->event.pressed) {
-      
-      } else {
-        
-      }
-      return false;
-    }
+  }
+     
   return true;
 }
 
