@@ -63,7 +63,9 @@ enum custom_keycodes {
   BACKLIT,
   RGBRST,
   EMAIL, // 이메일 입력하는 메크로
-  RGBHEX // RGB 컬러 HEX값 랜덤 생성하는 매크로
+  RGBHEX, // RGB 컬러 HEX값 랜덤 생성하는 매크로
+  M1,
+  M2
 };
 
 enum macro_keycodes {
@@ -128,9 +130,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       FORCE,     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      SCRLOCK, XXXXXXX, XXXXXXX, XXXXXXX, KC_BRMU, KC_VOLU,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
+      SCRLOCK,   KC_F11, KC_F12, XXXXXXX,     KC_BRMU, KC_VOLU,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,   EMAIL, XXXXXXX,  RGBHEX, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
+      EMAIL,   M1 ,     M2,       RGBHEX, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, XXXXXXX, KC_ENT,    XXXXXXX, XXXXXXX, _______ \
                                       //`--------------------------'  `--------------------------'
@@ -306,6 +308,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING("\n");
         }
         return false;
+
+    case M1:
+        if (record->event.pressed) {
+          // SEND_STRING(SS_LGUI("v") SS_DELAY(100) "\b\b" SS_DELAY(10));
+          // register_code(KC_F11);
+//          SEND_STRING("VE" SS_DELAY(1000) SS_TAP(X_HOME) "LO");          
+        } else { 
+//           SEND_STRING(SS_LGUI("ac")); // selects all and copies
+        }
+        return false;
+
+    case M2:
+        if (record->event.pressed) {
+        } else { 
+        }
+        return false;
+
   }
   return true;
 }
