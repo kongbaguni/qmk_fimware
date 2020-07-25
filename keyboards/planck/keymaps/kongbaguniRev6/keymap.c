@@ -38,11 +38,11 @@ enum planck_keycodes {
 #include "dynamic_macro.h"
 #define M_TAB MT(MOD_LCTL,KC_TAB)
 #define M_GUI MT(MOD_LGUI,KC_BSPC)
-#define M_RSFT MT(MOD_RSFT, KC_ENT)
-
+#define M_RSFT MT(MOD_RSFT, KC_ENT) 
+#define M_ALT MT(MOD_LALT,KC_CAPS)
 
 #define L_RAISE LT(_RAISE, KC_ENT)
-#define L_LOWER LT(_LOWER, KC_ENT)
+#define L_LOWER LT(_LOWER, KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -62,9 +62,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT_planck_grid(
   KC_ESC,    KC_Q,       KC_W,        KC_E,      KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,      KC_O,      KC_P,       KC_BSPC,
-  M_TAB,     KC_A,       KC_S,        KC_D,      KC_F,    KC_G,    KC_H,    KC_J,    KC_K,      KC_L,      KC_SCLN,    KC_QUOT,
+  M_TAB,     KC_A,       KC_S,        KC_D,      KC_F,    KC_G,    KC_H,    KC_J,   KC_K,      KC_L,      KC_SCLN,    KC_QUOT,
   KC_LSFT,   KC_Z,       KC_X,        KC_C,      KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM,   KC_DOT,    KC_SLSH,    M_RSFT,
-  MO(_FUNC), KC_LCTL,    KC_LALT,     M_GUI,     L_LOWER, KC_SPC , KC_SPC,  L_RAISE,   KC_LEFT,   KC_DOWN,   KC_UP,      KC_RIGHT
+  MO(_FUNC), KC_LCTL,    M_ALT,     M_GUI,     L_LOWER, L_LOWER , L_RAISE,  L_RAISE,   KC_LEFT,   KC_DOWN,   KC_UP,      KC_RIGHT
 ),
 
 /* Function
