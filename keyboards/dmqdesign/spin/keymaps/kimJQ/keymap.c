@@ -146,12 +146,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
      case MECRO_04:
       if (record->event.pressed) {
-        SEND_STRING("=");
+        SEND_STRING("=" SS_DELAY(200));
         tap_code(KC_UP);
-        SEND_STRING("+");
+        SEND_STRING(SS_DELAY(200) "+" SS_DELAY(200));
         tap_code(KC_LEFT);
+        SEND_STRING(SS_DELAY(200));
         tap_code(KC_LEFT);
-        SEND_STRING("-");
+        SEND_STRING("-" SS_DELAY(200));
         tap_code(KC_LEFT);
       } else {
         
