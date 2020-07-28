@@ -26,6 +26,11 @@
 */
 #define MATRIX_COL_PINS { F5, F6, F7, F0, F1, F4, B6, B5, D7, C7, D6, B7 }
 #define MATRIX_ROW_PINS { D2, D3, D0, D1 }
+
+#define ENCODERS_PAD_A { B3, B4 }
+#define ENCODERS_PAD_B { C6, C7 }
+#define ENCODER_RESOLUTION 4
+
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */

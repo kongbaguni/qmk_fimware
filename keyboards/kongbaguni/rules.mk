@@ -37,3 +37,5 @@ UNICODE_ENABLE = no         # Unicode
 UNICODEMAP_ENABLE = no      # ^^
 UCIS_ENABLE = no            # ^^
 BLUETOOTH = AdafruitBLE
+
+ENCODER_ENABLE = yes
