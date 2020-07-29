@@ -197,6 +197,10 @@ char * randomRGBhex(void) {
 
 char * RGB_MODE(void) {
   char * string = " [00]";
+  switch (RGB_current_mode) {
+    case 0:
+    return "";
+  }
   sprintf(string, " [%02d]", RGB_current_mode);
   return string;
 }
