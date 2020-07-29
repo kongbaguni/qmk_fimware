@@ -324,7 +324,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
           register_code(KC_LGUI);
           register_code(KC_LSFT);
-          SEND_STRING("4");
+          SEND_STRING("5");
           unregister_code(KC_LGUI);
           unregister_code(KC_LSFT);
         } else { 
