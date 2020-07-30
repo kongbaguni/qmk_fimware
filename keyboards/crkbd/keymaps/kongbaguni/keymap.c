@@ -185,6 +185,9 @@ void matrix_scan_user(void) {
    iota_gfx_task();
 }
 
+
+#define RANDOM_RGB_HEX 
+#ifdef RANDOM_RGB_HEX
 unsigned char randomSeed = 0;
 char * randomRGBhex(void) {
   char * RGB = "#000000";    
@@ -194,7 +197,7 @@ char * randomRGBhex(void) {
   sprintf(RGB,"#%03x%03x",a,b);
   return RGB;
 }
-
+#endif
 char * RGB_MODE(void) {
   char * string = " [00]";
   switch (RGB_current_mode) {
@@ -207,7 +210,9 @@ char * RGB_MODE(void) {
 
 void matrix_render_user(struct CharacterMatrix *matrix) {
   if (is_master) {
+    #ifdef RANDOM_RGB_HEX
    randomSeed += 1;
+    #endif
     // If you want to change the display of OLED, you need to change here
    matrix_write(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
    matrix_write(matrix, " ");
@@ -312,11 +317,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
 
     case M2:
+    #ifdef RANDOM_RGB_HEX
         if (record->event.pressed) {
           send_string(randomRGBhex());
         } else {
           SEND_STRING("\n");
         }
+    #endif
         return false;
 
     case M3:
