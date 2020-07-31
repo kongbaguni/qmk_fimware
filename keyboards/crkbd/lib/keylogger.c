@@ -11,15 +11,25 @@ const char code_to_name[60] = {
     'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
     'R', 'E', 'B', 'T', ' ', ' ', ' ', '[', ']', ' ',
-    ' ', ';', '\'', ' ', ',', '.', '/', ' ', ' ', ' '};
+    ' ', ';', '\'', ' ', ',', '.', '/', ' ', ' ', ' '
+  };
 
 const char code_sp_name[] = {
   '!','@','#','$','%','^','&','*','(',')'
 };
+
 void set_keylog(uint16_t keycode, keyrecord_t *record) {
   char name = ' ';
   switch (keycode) {
-    case 79: case 243: //right
+    case 44:  case 17452:
+    name -=10;
+    break ;
+
+    case 29224: case 225:
+    name -= 2;
+    break;
+    
+    case 79: case 243://right
     name -= 6;
     break;
 
