@@ -12,7 +12,7 @@ const char code_to_name[60] = {
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
     'R', 'E', 'B', 'T', ' ', ' ', ' ', '[', ']', ' ',
     ' ', ';', '\'', ' ', ',', '.', '/', ' ', ' ', ' '
-  };
+};
 
 const char code_sp_name[] = {
   '!','@','#','$','%','^','&','*','(',')'
@@ -28,7 +28,7 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
     case 29224: case 225:
     name -= 2;
     break;
-    
+
     case 79: case 243://right
     name -= 6;
     break;
@@ -39,7 +39,7 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
 
     case 81: case 241: // down 
     name -= 7;
-    break ;
+    break;
 
     case 82: case 240: //up
     name -= 8;
