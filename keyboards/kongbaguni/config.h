@@ -25,21 +25,27 @@
  *
 */
 // https://deskthority.net/wiki/Arduino_Pro_Micro#Pinout 참고할것.
-// ARDUINO	AVR	↑	AVR	ARDUINO
-// USB PORT	
- 	 	 
-//  D3	==|	|==	RAW (+5V from USB)
-//  D2  |	  |	GND
-// GND	|	  |	Reset
-// GND	|	  |	Vcc (+3V*)
-//  D1	|	  |	F4	
-//  D0	|	  |	F5	
-//  D4	|	  |	F6	
-//  C6	|	  |	F7	
-//  D7	|	  |	B1	
-//  E6	|	  |	B3
-//  B4	|	  |	B2	
-//  B5	|=====|	B6	
+/* 
+Pro MICRO
+
+    D3	==|	|==	RAW (+5V from USB)
+    D2  |	  |	GND
+   GND	|	  |	Reset
+   GND	|	  |	Vcc (+3V*)
+    D1	|	  |	F4	
+    D0	|	  |	F5	
+    D4	|	  |	F6	
+    C6	|	  |	F7	
+    D7	|	  |	B1	
+    E6	|	  |	B3
+    B4	|	  |	B2	
+    B5	|=====|	B6
+
+ Proton C
+
+ 
+
+*/ 	
 
 #define MATRIX_COL_PINS { C6, D7, E6, B4, B5, B6, B2, B3, B1, F7, F6, F5 }
 #define MATRIX_ROW_PINS { D3, D2, D1, D0, D4 }
