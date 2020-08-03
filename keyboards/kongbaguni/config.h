@@ -65,9 +65,9 @@ RST |===============|	A15
 
 Encoder
 
-D3		--####-- 
+D3		--####--  B2 
 GND		--####
-D2 		--####--
+D2 		--####--  D4 |<-DIOD
 */ 	 
 
 #define MATRIX_COL_PINS { E6, D7, C6, D4, D0, D1, F4, F5, F6, F7, B1, B3 }
