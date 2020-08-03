@@ -18,7 +18,6 @@ extern uint8_t is_master;
 #define _ADJUST 3
 #define _FUNC 4
 
-
 #define M1START DYN_REC_START1
 #define M1_PLAY DYN_MACRO_PLAY1
 
@@ -62,10 +61,10 @@ enum custom_keycodes {
   ADJUST,
   BACKLIT,
   RGBRST,
-  EMAIL, // 이메일 입력하는 메크로
-  RGBHEX, // RGB 컬러 HEX값 랜덤 생성하는 매크로
   M1,
-  M2
+  M2,
+  M3,
+  M4
 };
 
 enum macro_keycodes {
@@ -119,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX, XXXXXXX,\
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,   LOWER, _______,    _______,   RAISE, _______ \
                                       //`--------------------------'  `--------------------------'
@@ -130,30 +129,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       FORCE,     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      SCRLOCK,   KC_F11, KC_F12, XXXXXXX,     KC_BRMU, KC_VOLU,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
+      SCRLOCK,   KC_F11, KC_F12, XXXXXXX, KC_BRMU, KC_VOLU,                      MS_BTN3, MS_BTN1,   MS_UP, MS_BTN2, MS_BTN4, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      EMAIL,   M1 ,     M2,       RGBHEX, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
+           M1,      M2,      M3,      M4, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, XXXXXXX, KC_ENT,    XXXXXXX, XXXXXXX, _______ \
                                       //`--------------------------'  `--------------------------'
   ),  
+
+
 };
 
 
-
 int RGB_current_mode;
-
-
-unsigned char randomSeed = 0;
-
-char * RGB_HEX = "#000000";
-
-void randomRGBhex(void) {
-  srand(randomSeed);
-  int a = rand() % 0xfff;
-  int b = rand() % 0xfff;
-  sprintf(RGB_HEX,"#%03x%03x",a,b);
-}
 
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
@@ -186,9 +174,9 @@ const char *read_layer_state(void);
 const char *read_logo(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
-const char *read_keylogs(void);
+// const char *read_keylogs(void);
 
-//const char *read_mode_icon(bool swap);
+const char *read_mode_icon(bool swap);
 // const char *read_host_led_state(void);
 // void set_timelog(void);
 // const char *read_timelog(void);
@@ -197,17 +185,44 @@ void matrix_scan_user(void) {
    iota_gfx_task();
 }
 
+
+#define RANDOM_RGB_HEX 
+#ifdef RANDOM_RGB_HEX
+unsigned char randomSeed = 0;
+char * randomRGBhex(void) {
+  char * RGB = "#000000";    
+  srand(randomSeed);
+  int a = rand() % 0xfff;
+  int b = rand() % 0xfff;
+  sprintf(RGB,"#%03x%03x",a,b);
+  return RGB;
+}
+#endif
+char * RGB_MODE(void) {
+  char * string = " [00]";
+  switch (RGB_current_mode) {
+    case 0:
+    return "";
+  }
+  sprintf(string, " [%02d]", RGB_current_mode);
+  return string;
+}
+
 void matrix_render_user(struct CharacterMatrix *matrix) {
-  randomSeed += 1;
   if (is_master) {
+    #ifdef RANDOM_RGB_HEX
+   randomSeed += 1;
+    #endif
     // If you want to change the display of OLED, you need to change here
+   matrix_write(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
+   matrix_write(matrix, " ");
    matrix_write_ln(matrix, read_layer_state());
-   matrix_write_ln(matrix, read_keylog());
-   matrix_write(matrix, RGB_HEX);
-    //matrix_write_ln(matrix, read_keylogs());
-    //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
-    //matrix_write_ln(matrix, read_host_led_state());
-    //matrix_write_ln(matrix, read_timelog());
+   matrix_write(matrix, read_keylog());
+   matrix_write(matrix, RGB_MODE());
+   
+   
+   // matrix_write(matrix, read_keylogs());
+   // matrix_write_ln(matrix, read_timelog());
   } else {
    matrix_write(matrix, read_logo());
   }
@@ -243,6 +258,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
+
     
     case LOWER:
       if (record->event.pressed) {
@@ -292,7 +308,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       #endif
       return false;
 
-    case EMAIL:
+    case M1:
     if (record->event.pressed) {
             SEND_STRING("kongbaguni@gmail.com");
         } else {
@@ -300,31 +316,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     return false;
 
-    case RGBHEX:
+    case M2:
+    #ifdef RANDOM_RGB_HEX
         if (record->event.pressed) {
-          randomRGBhex();
-          send_string(RGB_HEX);
+          send_string(randomRGBhex());
         } else {
           SEND_STRING("\n");
         }
+    #endif
         return false;
 
-    case M1:
+    case M3:
+    // Screen Shot
         if (record->event.pressed) {
-          // SEND_STRING(SS_LGUI("v") SS_DELAY(100) "\b\b" SS_DELAY(10));
-          // register_code(KC_F11);
-//          SEND_STRING("VE" SS_DELAY(1000) SS_TAP(X_HOME) "LO");          
+          register_code(KC_LGUI);
+          register_code(KC_LSFT);
+          SEND_STRING("5");
+          unregister_code(KC_LGUI);
+          unregister_code(KC_LSFT);
         } else { 
-//           SEND_STRING(SS_LGUI("ac")); // selects all and copies
+
         }
         return false;
 
-    case M2:
+    case M4:
+    // Screen Invert
         if (record->event.pressed) {
+          register_code(KC_LCTL);
+          register_code(KC_LGUI);
+          register_code(KC_LALT);
+          tap_code(KC_8);
+          unregister_code(KC_LCTL);
+          unregister_code(KC_LGUI);
+          unregister_code(KC_LALT);
         } else { 
         }
         return false;
-
   }
   return true;
 }

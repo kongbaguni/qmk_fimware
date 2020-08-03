@@ -125,8 +125,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MECRO_01:
       if (record->event.pressed) {
         SEND_STRING(SS_LCTL("v") "\b\b" SS_DELAY(100));  
-        register_code(KC_F2);
-        unregister_code(KC_F2);
+        tap_code(KC_F2);
       } else {
       }
       return false;
@@ -147,17 +146,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
      case MECRO_04:
       if (record->event.pressed) {
-        SEND_STRING("=");
-        register_code(KC_UP);
-        unregister_code(KC_UP);
-        SEND_STRING("+");
-        register_code(KC_LEFT);
-        unregister_code(KC_LEFT);
-        register_code(KC_LEFT);
-        unregister_code(KC_LEFT);
-        SEND_STRING("-");
-        register_code(KC_LEFT);
-        unregister_code(KC_LEFT);        
+        SEND_STRING("=" SS_DELAY(200));
+        tap_code(KC_UP);
+        SEND_STRING(SS_DELAY(200) "+" SS_DELAY(200));
+        tap_code(KC_LEFT);
+        SEND_STRING(SS_DELAY(200));
+        tap_code(KC_LEFT);
+        SEND_STRING("-" SS_DELAY(200));
+        tap_code(KC_LEFT);
       } else {
         
       }
