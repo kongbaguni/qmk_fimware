@@ -1,4 +1,4 @@
-/* Copyright 2020 shela
+/* Copyright 2020 dztech
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,26 +13,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "volcano660.h"
 
-#pragma once
+void matrix_init_kb(void) {
+    setPinOutput(D0);
+    setPinOutput(D1);
+    setPinOutput(D2); 
+    matrix_init_user();
+}
 
-#include "../../config.h"
+bool led_update_kb(led_t led_state) {
+    bool res = led_update_user(led_state);
+    if(res) {
+        writePin(D0, !led_state.num_lock);
+        writePin(D2, !led_state.caps_lock);
+        writePin(D1, !led_state.scroll_lock);
 
-/* USB Device descriptor parameter */
-#undef VENDOR_ID
-#define VENDOR_ID 0x0853
-#undef PRODUCT_ID
-#define PRODUCT_ID 0x0100
-#undef DEVICE_VER
-#define DEVICE_VER 0x0102
-#undef MANUFACTURER
-#define MANUFACTURER Topre Corporation
-#undef PRODUCT
-#define PRODUCT HHKB Professional
-
-#undef TAPPING_TERM
-#define TAPPING_TERM 210
-#define SPFN_TAPPING_TERM 190 /* SpaceFN tapping term */
-
-#define ONESHOT_TAP_TOGGLE 3
-#define ONESHOT_TIMEOUT 2000
+    }
+    return res;
+}
