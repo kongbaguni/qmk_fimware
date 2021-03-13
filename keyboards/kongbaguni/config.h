@@ -11,7 +11,7 @@
 #define DESCRIPTION     42key handwired keyboard
 
 /* key matrix size */
-#define MATRIX_ROWS 5
+#define MATRIX_ROWS 4
 #define MATRIX_COLS 12
 
 /*
@@ -36,13 +36,12 @@ Pro MICRO
     D0	|	  |	F5	
     D4	|	  |	F6	
     C6	|	  |	F7	
-    D7	|	  |	B1	
+    D7	|	  |	B1	        
     E6	|	  |	B3
     B4	|	  |	B2	
     B5	|=====|	B6
 
  Proton C
-
  5V ======|  |=======	A9
 GNF |		 		|	A10
 DFU | A3  5v D- D+	|	GND
@@ -65,17 +64,16 @@ RST |===============|	A15
 
 Encoder
 
-D3		--####--  B2 
+D3		--####--  B2 ZZ
 GND		--####
 D2 		--####--  D4 |<-DIOD
 */ 	 
-
-#define MATRIX_COL_PINS { E6, D7, C6, D4, D0, D1, F4, F5, F6, F7, B1, B3 }
 #define MATRIX_ROW_PINS { B5, B6, B4, B2 }
+#define MATRIX_COL_PINS { E6, D7, C6, D4, D0, D1, F4, F5, F6, F7, B1, B3 }
 
 #define ENCODERS_PAD_A { D3 }
 #define ENCODERS_PAD_B { D2 }
-#define ENCODER_RESOLUTION 4
+#define ENCODER_RESOLUTION 1
 
 #define UNUSED_PINS
 

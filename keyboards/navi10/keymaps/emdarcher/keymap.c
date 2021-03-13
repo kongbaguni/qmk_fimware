@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FN0] = LAYOUT(/* function layer */
                  KC_TRNS,   KC_PAUS,    KC_VOLU,
                  KC_ENTER,  KC_SLCK,    KC_VOLD,
-                 
+              
                             KC_TRNS,
                  KC_TRNS,   KC_TRNS,    KC_TRNS),
     [_ML1] = LAYOUT(/* media function layer on double tap */

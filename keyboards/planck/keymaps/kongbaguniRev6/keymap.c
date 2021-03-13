@@ -1,3 +1,4 @@
+
 #include "planck.h"
 #include "action_layer.h"
 #include "eeconfig.h"
@@ -46,6 +47,7 @@ enum planck_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
+
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
  * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
@@ -81,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FUNC] = LAYOUT_planck_grid(
   XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,    KC_F7,    KC_F8,    KC_F9,   KC_F10,  KC_DEL,
   XXXXXXX, KC_F11,  KC_F12,  KC_PSCR, KC_SLCK, KC_PAUS, KC_INS,   KC_HOME,  KC_END,   KC_PGUP, KC_PGDN, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
+  M(0),  M(1),   M(2),    M(3),    M(4),    M(5),    M(6),     M(7),     M(8),     M(9),    M(10),     XXXXXXX,
   _______, _______, _______, _______, _______, _______, _______,  MO(_MOUSE), _______, _______, _______, _______
 ),
 
@@ -217,8 +219,9 @@ void persistant_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool mecroLoop = false;
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (!process_record_dynamic_macro(keycode, record)) {
       return false;
   }
@@ -291,16 +294,89 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+void toggleMecroLoop(void) {
+  if (mecroLoop == true) {
+    mecroLoop = false;
+  } else {
+    mecroLoop = true;
+  }
+}
+
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t keycode, uint8_t opt) {
   // These would trigger when you hit a key mapped as M(0)
   if (record->event.pressed) {
     switch(keycode) {
       case 0: // Some custom string here
-        SEND_STRING("");
+        toggleMecroLoop();
+        if (mecroLoop == true) {
+          while (mecroLoop == true) {
+            tap_code(KC_F1);
+            SEND_STRING(SS_DELAY(1000));
+            // tap_code(KC_ESC);
+            // SEND_STRING(SS_DELAY(4000));
+
+            tap_code(KC_F2);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+
+            tap_code(KC_F3);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+
+            tap_code(KC_F4);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+
+            tap_code(KC_F5);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+
+            tap_code(KC_F2);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+
+            tap_code(KC_F3);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+
+            tap_code(KC_F4);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+            
+            tap_code(KC_F5);
+            SEND_STRING(SS_DELAY(4000));
+            tap_code(KC_ESC);
+            SEND_STRING(SS_DELAY(200));
+            
+          }
+        } 
         return false;
 
       case 1: // Word Select
-        SEND_STRING(SS_DOWN(X_LCTRL) SS_TAP(X_RIGHT) SS_DOWN(X_LSHIFT) SS_TAP(X_LEFT) SS_UP(X_LSHIFT) SS_UP(X_LCTRL));
+          toggleMecroLoop();
+          while (mecroLoop == true) {
+            tap_code(KC_F1);
+            SEND_STRING(SS_DELAY(1000));
+
+            tap_code(KC_F2);
+            SEND_STRING(SS_DELAY(8000));
+
+            tap_code(KC_F3);
+            SEND_STRING(SS_DELAY(8000));
+
+            tap_code(KC_F4);
+            SEND_STRING(SS_DELAY(8000));
+
+            tap_code(KC_F5);
+            SEND_STRING(SS_DELAY(8000));
+          }
         return false;
 
       case 2: // Word Select Mac
@@ -352,3 +428,38 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t keycode, uint8_t op
   }
   return MACRO_NONE;
 };
+
+
+void encoder_update_user(uint8_t index, bool clockwise) {
+   if (IS_LAYER_ON(_RAISE)) {
+      if (clockwise) {
+            rgblight_increase_hue();
+      } else {
+            rgblight_decrease_hue();
+      } 
+   }
+   else if(IS_LAYER_ON(_LOWER)) {
+
+      if (clockwise) {
+            rgblight_step();
+      } else {
+            rgblight_step_reverse();
+      }
+   }
+   else if(IS_LAYER_ON(_FUNC)) {
+      if (clockwise) {
+         tap_code(KC_VOLU);
+      } else {
+         tap_code(KC_VOLD);
+      }    
+   }
+   else {
+      if (clockwise) {
+            tap_code(KC_DOWN);
+      } else {
+            tap_code(KC_UP);
+      }
+   }
+        
+}
+

@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, M_SHIFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                  KC_SPC, KC_LGUI, L_LOWER, KC_SPC,     L_FUNC,  L_RAISE,  M_RALT \
+                                           KC_LGUI, L_LOWER, KC_SPC,     L_FUNC,  L_RAISE,  M_RALT \
                                       //`--------------------------'  `--------------------------'                                          
   ),
 
@@ -94,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
   // |--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                  KC_SPC,_______,   LOWER, KC_DEL,      KC_DEL  , RAISE, _______ \
+                                           _______,   LOWER, KC_DEL,      KC_DEL  , RAISE, _______ \
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_B,    KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX, _______,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                  KC_SPC,  _______, LOWER,  KC_ENT,      KC_ENT,   RAISE, _______ \
+                                          _______, LOWER,  KC_ENT,      KC_ENT,   RAISE, _______ \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -121,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                KC_SPC,  _______,   LOWER, _______,    _______,   RAISE, _______\
+                                        _______,   LOWER, _______,    _______,   RAISE, _______\
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -134,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       EMAIL,   M1 ,     M2,       RGBHEX, KC_BRMD, KC_VOLD,                      XXXXXXX, MS_LEFT, MS_DOWN,MS_RIGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                 KC_SPC, _______, XXXXXXX, KC_ENT,    XXXXXXX, XXXXXXX, _______\
+                                         _______, XXXXXXX, KC_ENT,    XXXXXXX, XXXXXXX, _______\
                                       //`--------------------------'  `--------------------------'
   ),  
 };
@@ -147,13 +147,6 @@ int RGB_current_mode;
 unsigned char randomSeed = 0;
 
 char * RGB_HEX = "#000000";
-
-void randomRGBhex(void) {
-  srand(randomSeed);
-  int a = rand() % 0xfff;
-  int b = rand() % 0xfff;
-  sprintf(RGB_HEX,"#%03x%03x",a,b);
-}
 
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
@@ -169,73 +162,12 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
   }
 }
 
-void matrix_init_user(void) {
-    #ifdef RGBLIGHT_ENABLE
-      RGB_current_mode = rgblight_config.mode;
-    #endif
-    //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
-    #ifdef SSD1306OLED
-        iota_gfx_init(!has_usb());   // turns on the display
-    #endif
-}
-
-//SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
-#ifdef SSD1306OLED
-// When add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
-const char *read_logo(void);
-void set_keylog(uint16_t keycode, keyrecord_t *record);
-const char *read_keylog(void);
-const char *read_keylogs(void);
-
-//const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
-
-void matrix_scan_user(void) {
-   iota_gfx_task();
-}
-
-void matrix_render_user(struct CharacterMatrix *matrix) {
-  randomSeed += 1;
-  if (is_master) {
-    // If you want to change the display of OLED, you need to change here
-   matrix_write_ln(matrix, read_layer_state());
-   matrix_write_ln(matrix, read_keylog());
-   matrix_write(matrix, RGB_HEX);
-    //matrix_write_ln(matrix, read_keylogs());
-    //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
-    //matrix_write_ln(matrix, read_host_led_state());
-    //matrix_write_ln(matrix, read_timelog());
-  } else {
-   matrix_write(matrix, read_logo());
-  }
-}
-
-void matrix_update(struct CharacterMatrix *dest, const struct CharacterMatrix *source) {
-  if (memcmp(dest->display, source->display, sizeof(dest->display))) {
-    memcpy(dest->display, source->display, sizeof(dest->display));
-    dest->dirty = true;
-  }
-}
-
-void iota_gfx_task_user(void) {
-  struct CharacterMatrix matrix;
-  matrix_clear(&matrix);
-  matrix_render_user(&matrix);
-  matrix_update(&display, &matrix);
-}
-#endif//SSD1306OLED
+//void matrix_init_user(void) {
+//
+//}
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-#ifdef SSD1306OLED
-    set_keylog(keycode, record);
-#endif
-    // set_timelog();
-  }
 
   switch (keycode) {
     case QWERTY:
@@ -272,43 +204,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
     
-    case RGB_MOD:
-      #ifdef RGBLIGHT_ENABLE
-        if (record->event.pressed) {
-          rgblight_mode(RGB_current_mode);
-          rgblight_step();
-          RGB_current_mode = rgblight_config.mode;
-        }
-      #endif
-      return false;
-    
-    case RGBRST:
-      #ifdef RGBLIGHT_ENABLE
-        if (record->event.pressed) {
-          eeconfig_update_rgblight_default();
-          rgblight_enable();
-          RGB_current_mode = rgblight_config.mode;
-        }
-      #endif
-      return false;
-
-    case EMAIL:
-    if (record->event.pressed) {
-            SEND_STRING("kongbaguni@gmail.com");
-        } else {
-            SEND_STRING("\t");
-        }
-    return false;
-
-    case RGBHEX:
-        if (record->event.pressed) {
-          randomRGBhex();
-          send_string(RGB_HEX);
-        } else {
-          SEND_STRING("\n");
-        }
-        return false;
-
     case M1:
         if (record->event.pressed) {
           // SEND_STRING(SS_LGUI("v") SS_DELAY(100) "\b\b" SS_DELAY(10));
